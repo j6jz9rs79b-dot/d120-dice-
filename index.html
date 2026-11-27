@@ -78,7 +78,7 @@ function addFace(a,b,c){
  const va=unique[a],vb=unique[b],vc=unique[c];const center=va.clone().add(vb).add(vc).divideScalar(3);
  const normal=vb.clone().sub(va).cross(vc.clone().sub(va)).normalize();if(normal.dot(center)<0){[b,c]=[c,b]}
  const A=unique[a],B=unique[b],C=unique[c];
- const nums=[1+Math.floor(Math.random()*6),1+Math.floor(Math.random()*6),1+Math.floor(Math.random()*6)];
+ const nums=[1,2,3,4,5,6].sort(()=>Math.random()-.5).slice(0,3);
  const geometry=new THREE.BufferGeometry();geometry.setAttribute('position',new THREE.Float32BufferAttribute([...A.toArray(),...B.toArray(),...C.toArray()],3));geometry.setAttribute('uv',new THREE.Float32BufferAttribute([0,0,1,0,.5,1],2));geometry.computeVertexNormals();
  const material=new THREE.MeshStandardMaterial({map:faceTexture(nums),side:THREE.DoubleSide,roughness:.48,metalness:.18});
  const mesh=new THREE.Mesh(geometry,material);diceGroup.add(mesh);faceMeshes.push(mesh);materials.push(material);
@@ -94,7 +94,7 @@ stage.addEventListener('pointerup',()=>drag=false);stage.addEventListener('point
 function resize(){const w=stage.clientWidth,h=stage.clientHeight;renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix()}new ResizeObserver(resize).observe(stage);resize();
 let rolling=false;
 function animate(){requestAnimationFrame(animate);if(!drag&&!rolling){diceGroup.rotation.y+=velY;diceGroup.rotation.x+=velX;velX*=.985;velY*=.985;if(Math.abs(velX)<.00005)velX=.00008;if(Math.abs(velY)<.00005)velY=.00012}renderer.render(scene,camera)}animate();
-function randomTriple(){return Array.from({length:3},()=>1+Math.floor(Math.random()*6))}
+function randomTriple(){return [1,2,3,4,5,6].sort(()=>Math.random()-.5).slice(0,3)}
 rollBtn.addEventListener('click',()=>{
  if(rolling)return;rolling=true;rollBtn.disabled=true;const n=Number(countEl.value);const values=Array.from({length:n},randomTriple);
  const startX=diceGroup.rotation.x,startY=diceGroup.rotation.y;const start=performance.now(),duration=1450+Math.random()*450;
