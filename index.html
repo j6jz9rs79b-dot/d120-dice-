@@ -82,7 +82,7 @@ function saveHistory(){localStorage.setItem(HISTORY_KEY,JSON.stringify(history))
 function esc(s){return String(s??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]))}
 function yen(n){return Number(n||0).toLocaleString('ja-JP')+'円'}
 function renderHistory(){
- if(!history.length){historyList.innerHTML='<p class="history-meta">履歴はまだありません。サイコロを振ると自動で保存されます。</p>';statsEl.textContent='履歴はまだありません';return}
+ if(!history.length){historyList.innerHTML='<p class="history-meta">履歴はこの端末のブラウザ内に保存されます。別端末とは共有されません。</p>';statsEl.textContent='履歴はまだありません';return}
  const settled=history.filter(h=>h.status!=='未判定');
  const totalStake=history.reduce((s,h)=>s+Number(h.stake||0),0);
  const totalPayout=history.reduce((s,h)=>s+Number(h.payout||0),0);
